@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <title>토스 결제 v1 테스트</title>
+  <script src="https://js.tosspayments.com/v1"></script>
+</head>
+<body>
+
+<h2>토스 결제 테스트 (v1 SDK)</h2>
+
+<button id="payBtn">결제하기</button>
+
+<script>
+  // ✅ 반드시 "API 개별 연동 키" 사용
+  // 형식: test_ck_xxxxxxxxx
+  const clientKey = "test_ck_ma60RZblrqjeDBNwNmXz8wzYWBn1";
+
+  const tossPayments = TossPayments(clientKey);
+
+  // 테스트용 주문 정보 (이미 DB에 만든 값)
+  const orderId = "20260114_9d8b9e9753e24f979c2af4d39e605305";
+  const orderName = "테스트용";
+  const amount = 103;
+
+  document.getElementById("payBtn").addEventListener("click", () => {
+    tossPayments.requestPayment("카드", {
+      amount: amount,
+      orderId: orderId,
+      orderName: orderName,
+
+      // 결제 성공 / 실패 시 이동할 URL
+      successUrl: "http://127.0.0.1:8000/payments/toss/success/",
+      failUrl: "http://127.0.0.1:8000/payments/toss/fail/",
+    });
+  });
+</script>
+
+</body>
+</html>
