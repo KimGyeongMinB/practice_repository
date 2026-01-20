@@ -27,7 +27,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     # 입력해야하는 필드
     nickname = models.CharField(max_length=15)
     email = models.EmailField(unique=True)
-    password = models.CharField(max_length=20)
+    password = models.CharField(max_length=200)
 
     # 비 입력 필드
     date_join = models.DateTimeField(auto_now_add=True)

@@ -17,6 +17,7 @@ from .serializers import (SignupSerializer, TokenObtainPairSerializer,
                         MypageSerializer, ForgotPassword, VerifyForgotPassword, ResetPassword)
 from .emails import signup_send_mail, random_code, forgot_password_send_mail
 from .services import login_fail, clear_login_block_cache, login_block
+from credits.services import create_credit_wallet
 
 User = get_user_model()
 
@@ -84,6 +85,7 @@ class SignupConfirmAPIView(APIView):
             user = signup.save()
             cache.delete(f"signup_data:{email}")
             
+            create_credit_wallet(user=user)
             return Response(
             {"id": user.id, "email": user.email, "nickname": user.nickname},
             status=status.HTTP_201_CREATED
